@@ -1,0 +1,26 @@
+题目描述：
+给你一个字符串 s 和一个字符 c 。返回在字符串 s 中并且以 c 字符开头和结尾的非空子字符串的总数：
+思路：很简单，显然，跟该字符在字符串中的重复次数有关，考虑到长度可为一，有：数量=n*(n+1)/2
+题解：
+python:
+class Solution:
+    def countSubstrings(self, s: str, c: str) -> int:
+        return comb(s.count(c) + 1, 2)
+补充：
+s.count(c)：遍历整个字符串 s，并计算字符 c 出现的次数，然后返回这个计数值。
+
+comb(n,k):计算组合数。、
+
+Cpp:
+class Solution {
+public:
+    long long countSubstrings(string s, char c) {
+        long long k = ranges::count(s, c);
+        return k * (k + 1) / 2;
+    }
+}
+
+补充：
+ranges::count(s，c) ：
+函数是 C++20 中引入的标准库函数，遍历给定范围内的元素，并计算满足特定条件的元素的个数。
+接受一个范围（range）作为输入，以及一个谓词（predicate），谓词是一个返回布尔值的函数，用于确定元素是否满足特定条件。函数会返回满足条件的元素的个数。
