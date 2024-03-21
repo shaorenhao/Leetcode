@@ -10,4 +10,50 @@
 但是以上都没有具体的实现思路。
 
 思路：
-一、 
+一、 数组匹配：
+python:
+补充：pairwise()
+     输入：该函数以序列或集合（例如列表、数组或元组）作为输入。
+     处理：它遍历输入序列的元素，并以成对的方式进行处理。
+     成对操作：对于每次迭代，函数会同时处理两个相邻的元素，对这些成对进行一些操作或计算。
+     输出：函数可能会返回成对操作的结果，这可以是修改后的序列、包含成对的列表，或者根据具体用例而定的任何其他相关输出。
+     简而言之，是一个专门遍历相邻元素构成的数组。
+实现：
+  def solution(self,string):（自己）
+       set=set()
+       for x,y in pairwise(string):
+           set.add((x,y))
+           if (y,x) in set:
+              return True
+       return Flase
+
+   def isSubstringPresent(self, s: str) -> bool:（答案）
+        st = set()
+        for x, y in pairwise(s):
+            st.add((x, y))
+            if (y, x) in st:
+                return True
+        return False
+
+核心思想是建立一个包含所有可能的数组，不一定填满，然后再依次对比检索。
+！考虑到可能的字符串数目是成对的，因此一遍add,一边if查找。减少了运算次数。
+
+Cpp:
+class Solution {
+public:
+    bool isSubstringPresent(string s) {
+        bool vis[26][26]{};
+        for (int i = 1; i < s.length(); i++) {
+            int x = s[i - 1] - 'a', y = s[i] - 'a';
+            vis[x][y] = true;
+            if (vis[y][x]) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+public:表明函数是公共的，可从类外访问。（相当于python的成员函数）
+vis[26][26]{}：建立一个26*26数组，同时，使用初始化列表 {} 来初始化数组，其中的元素将被默认初始化，对于布尔类型的数组，这意味着所有的元素都将被初始化为 false。
+int x = s[i - 1] - 'a', y = s[i] - 'a'：将26个英文字母映射到0-25数字空间中。（python由于可以用元组作为数组中元素，方便很多，无需这么写。）
